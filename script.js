@@ -101,3 +101,65 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
 });
+// Обработка отправки формы в модальном окне
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForm = document.querySelector('.contact-form__form');
+    
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Валидация формы
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            if (name && email && message) {
+                // Симуляция отправки формы
+                const submitBtn = contactForm.querySelector('.contact-form__btn--submit');
+                const originalText = submitBtn.innerHTML;
+                
+                submitBtn.innerHTML = '⌛ Отправка...';
+                submitBtn.disabled = true;
+                
+                setTimeout(() => {
+                    // Показываем успешное сообщение
+                    alert('Сообщение успешно отправлено! Мы свяжемся с вами в ближайшее время.');
+                    
+                    // Закрываем модальное окно
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('contactModal'));
+                    modal.hide();
+                    
+                    // Восстанавливаем кнопку
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                    
+                    // Очищаем форму
+                    contactForm.reset();
+                }, 2000);
+            }
+        });
+        
+        // Обработка кнопки сброса
+        const resetBtn = contactForm.querySelector('.contact-form__btn--reset');
+        resetBtn.addEventListener('click', function() {
+            if (confirm('Вы уверены, что хотите очистить форму?')) {
+                contactForm.reset();
+            }
+        });
+    }
+    
+    // Анимация для полей формы при фокусе
+    const formInputs = document.querySelectorAll('.contact-form__form .form-control');
+    formInputs.forEach(input => {
+        input.addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        input.addEventListener('blur', function() {
+            if (!this.value) {
+                this.parentElement.classList.remove('focused');
+            }
+        });
+    });
+});
