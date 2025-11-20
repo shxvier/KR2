@@ -22,7 +22,7 @@
         }
         
         .modal-content {
-            background-color: white;
+            background-color: #f8f9fa;
             padding: 30px;
             border-radius: 10px;
             max-width: 700px;
@@ -30,6 +30,7 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             max-height: 90vh;
             overflow-y: auto;
+            border: 1px solid #dee2e6;
         }
         
         .modal-header {
@@ -37,14 +38,15 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 2px solid #007bff;
             padding-bottom: 15px;
         }
         
         .modal-title {
             font-size: 24px;
-            color: #333;
+            color: #343a40;
             margin: 0;
+            font-weight: 600;
         }
         
         .modal-close {
@@ -52,11 +54,11 @@
             border: none;
             font-size: 24px;
             cursor: pointer;
-            color: #777;
+            color: #6c757d;
         }
         
         .modal-close:hover {
-            color: #333;
+            color: #343a40;
         }
         
         .modal-actions {
@@ -72,7 +74,7 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
         }
         
         .modal-btn--submit {
@@ -82,6 +84,7 @@
         
         .modal-btn--submit:hover {
             background-color: #0056b3;
+            transform: translateY(-2px);
         }
         
         .modal-btn--cancel {
@@ -91,6 +94,7 @@
         
         .modal-btn--cancel:hover {
             background-color: #5a6268;
+            transform: translateY(-2px);
         }
         
         .success-modal {
@@ -100,87 +104,90 @@
         .success-icon {
             font-size: 50px;
             margin-bottom: 20px;
+            color: #28a745;
         }
         
         /* Стили для кнопки открытия формы */
         .open-form-btn {
-            background-color: #007bff;
+            background: linear-gradient(135deg, #007bff, #0056b3);
             color: white;
             border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
+            padding: 15px 30px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 18px;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
             display: block;
             margin: 30px auto;
+            box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
         }
         
         .open-form-btn:hover {
-            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0, 123, 255, 0.4);
+            background: linear-gradient(135deg, #0056b3, #004085);
         }
         
         /* Стили для контактной информации */
         .contact-item {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            border-radius: 12px;
+            padding: 25px;
             margin-bottom: 20px;
-            transition: transform 0.3s;
+            transition: all 0.3s;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         
         .contact-item:hover {
             transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
         
         .contact-item__icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
         }
         
         .contact-item__title {
-            font-size: 1.25rem;
-            margin-bottom: 10px;
-            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #343a40;
+            font-weight: 600;
         }
         
         .contact-item__text {
-            margin-bottom: 5px;
-            color: #555;
+            margin-bottom: 8px;
+            color: #495057;
+            font-size: 1rem;
         }
         
         .contact-item__note {
-            color: #777;
+            color: #6c757d;
             font-style: italic;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            display: block;
         }
         
         /* Стили для формы */
-        .contact-form__btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-            margin-right: 10px;
+        .form-control {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 10px 15px;
+            transition: all 0.3s;
         }
         
-        .contact-form__btn--submit {
-            background-color: #007bff;
-            color: white;
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
         }
         
-        .contact-form__btn--submit:hover {
-            background-color: #0056b3;
-        }
-        
-        .contact-form__btn--reset {
-            background-color: #6c757d;
-            color: white;
-        }
-        
-        .contact-form__btn--reset:hover {
-            background-color: #5a6268;
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+            margin-bottom: 8px;
         }
         
         /* Стили для FAQ */
@@ -189,77 +196,146 @@
         }
         
         .faq__item {
-            margin-bottom: 10px;
-            border-radius: 5px;
+            margin-bottom: 12px;
+            border-radius: 8px;
             overflow: hidden;
+            border: 1px solid #e9ecef;
         }
         
         .faq__question {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px;
-            background-color: #e9ecef;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: #343a40;
         }
         
         .faq__question:hover {
-            background-color: #dee2e6;
+            background: linear-gradient(135deg, #e9ecef, #dee2e6);
         }
         
         .faq__answer {
             display: none;
-            padding: 15px;
-            background-color: #f8f9fa;
+            padding: 20px;
+            background-color: #ffffff;
+            border-top: 1px solid #e9ecef;
+            color: #495057;
+            line-height: 1.6;
+        }
+        
+        .faq__toggle {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #007bff;
         }
         
         /* Стили для офиса */
         .office__info {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 25px;
             margin-top: 20px;
+            border: 1px solid #dee2e6;
         }
         
         .map-placeholder {
             text-align: center;
-            padding: 30px;
-            background-color: #e9ecef;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
             border-radius: 10px;
             margin-top: 20px;
+            border: 2px dashed #dee2e6;
         }
         
         .map-placeholder__icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            color: #6c757d;
+        }
+        
+        .map-placeholder__title {
+            color: #343a40;
             margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .map-placeholder__text {
+            color: #6c757d;
+            margin-bottom: 0;
         }
         
         /* Общие стили */
         .page__title {
             text-align: center;
-            margin-bottom: 30px;
-            color: #333;
+            margin-bottom: 40px;
+            color: #343a40;
+            font-weight: 700;
+            font-size: 2.5rem;
         }
         
         .contact-form__title, .faq__title, .office__title {
-            margin-bottom: 20px;
-            color: #333;
+            margin-bottom: 25px;
+            color: #343a40;
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+        
+        .office__subtitle {
+            color: #495057;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .office__address, .office__details {
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
         }
         
         .header__navbar {
-            background-color: #343a40;
+            background: linear-gradient(135deg, #343a40, #23272b) !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header__nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .header__nav-link:hover {
+            color: #007bff !important;
+        }
+        
+        .header__nav-link--active {
+            color: #007bff !important;
+            font-weight: 600;
         }
         
         .footer {
-            background-color: #343a40;
-            color: white;
-            padding: 20px 0;
-            margin-top: 40px;
+            background: linear-gradient(135deg, #343a40, #23272b);
+            color: #ffffff;
+            padding: 30px 0;
+            margin-top: 50px;
         }
         
-        .form-control {
-            border-radius: 5px;
+        .footer__text {
+            margin-bottom: 0;
+            text-align: center;
+            color: #dee2e6;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .main {
+            padding: 30px 0;
         }
     </style>
 </head>
@@ -286,7 +362,7 @@
                         <li class="nav-item header__nav-item">
                             <a class="nav-link header__nav-link header__nav-link--active" href="contacts.html">Контакты</a>
                         </li>
-                        <button id="themeToggle" class="btn btn-light ms-3">
+                        <button id="themeToggle" class="btn btn-outline-light ms-3">
                             Сделать DarkCyan
                         </button>
                     </ul>
