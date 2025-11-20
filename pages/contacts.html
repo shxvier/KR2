@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты — Zhuravlev Alexey</title>
+    <link rel="stylesheet" href="../style/styles.css">
+</head>
+<body>
+    <!-- Header с навигацией -->
+    <header class="main-header rounded transparent plasma-bg">
+        <nav class="nav-links">
+            <a href="../index.html" class="nav-link">Главная</a>
+            <a href="products.html" class="nav-link">Проекты</a>
+            <a href="about.html" class="nav-link">Обо мне</a>
+        </nav>
+    </header>
+    <!-- Основной контейнер с контактами -->
+    <main class="main-content">
+        <div class="content-container rounded transparent">
+            <h1>Связаться со мной</h1>
+            <section class="contact-info">
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="contact-icon">📧</div>
+                        <h3>Email</h3>
+                        <p>alexey.zh@edu.mirea.ru</p>
+                        <p>zhuravlevalexey@gmail.com</p>
+                        <small>Обычно отвечаю в течение 1 рабочего дня</small>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">🐙</div>
+                        <h3>GitHub</h3>
+                        <p>github.com/zhuravlevalexey</p>
+                        <small>Код проектов и экспериментальные разработки</small>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">💼</div>
+                        <h3>LinkedIn</h3>
+                        <p>linkedin.com/in/zhuravlevalexey</p>
+                        <small>Профессиональные контакты и предложения</small>
+                    </div>
+                    <div class="contact-card">
+                        <div class="contact-icon">📱</div>
+                        <h3>Телефон</h3>
+                        <p>+7 (999) 123-45-67</p>
+                        <small>Мессенджеры: Telegram, WhatsApp</small>
+                    </div>
+                </div>
+            </section>
+            <!-- Контактная форма -->
+            <section class="contact-form-section">
+                <h2>Написать сообщение</h2>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" required placeholder="Ваше имя *">
+                        <input type="email" id="email" name="email" required placeholder="Ваш email *">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="telegram" name="telegram" placeholder="Telegram или другой мессенджер">
+                    </div>
+                    <div class="form-group">
+                        <select id="subject" name="subject" required>
+                            <option value="">Выберите тему *</option>
+                            <option value="general">Общие вопросы</option>
+                            <option value="projects">Проекты</option>
+                            <option value="tech">Тех поддержка</option>
+                            <option value="design">UI/UX / дизайн</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" rows="5" required placeholder="Ваше сообщение *"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="agree" name="agree" required>
+                            Согласен с <a href="#" class="link">политикой конфиденциальности</a> *
+                        </label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">
+                            <span class="btn-text">Отправить</span> <span class="btn-icon">📤</span>
+                        </button>
+                        <button type="reset" class="reset-btn">Очистить</button>
+                    </div>
+                </form>
+            </section>
+            <!-- FAQ -->
+            <section class="faq-section">
+                <h2>FAQ (частые вопросы)</h2>
+                <div class="faq-list">
+                    <div class="faq-item"><strong>Когда можно получить быстрый ответ?</strong><div class="faq-answer">Обычно отвечаю в будние дни в течение дня, срочные моменты — через Telegram.</div></div>
+                    <div class="faq-item"><strong>Можно ли обсудить дизайн/анимацию?</strong><div class="faq-answer">Конечно! Приветствую любые вопросы по UI/UX, визуальным стилям или фронтенду.</div></div>
+                    <div class="faq-item"><strong>Делаешь ли групповые учебные проекты?</strong><div class="faq-answer">Да, участвую и в вузовских проектах, и внеучебных коллаборациях.</div></div>
+                    <div class="faq-item"><strong>Какой стек используешь?</strong><div class="faq-answer">Основной: C#/C++, JavaScript, HTML5/CSS3, SQL, а также кросс-платформенные и современные фреймворки.</div></div>
+                </div>
+            </section>
+            <!-- Карта -->
+            <section class="map-section">
+                <h2>Где найти автора?</h2>
+                <div class="map-placeholder">
+                    <div class="map-content">
+                        <div class="map-icon">🗺️</div>
+                        <h3>Москва, МИРЭА (EFBO-12-24)</h3>
+                        <p>Организую встречи по-необходимости — предварительная договоренность обязательна.</p>
+                        <div class="map-actions">
+                            <button class="map-btn">Показать на Яндекс.Картах</button>
+                            <button class="map-btn">Построить маршрут</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+    <footer class="footer rounded transparent">
+        <div class="footer-content">
+            <p>&copy; 2025 Zhuravlev Alexey. Персональные контакты и формы обратной связи разработчика.</p>
+            <p>EFBO-12-24 | МИРЭА</p>
+        </div>
+    </footer>
+    <script src="../script.js"></script>
+</body>
+</html>
