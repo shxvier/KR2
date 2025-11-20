@@ -1,43 +1,191 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Наши товары</title>
+    <title>Контакты</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style/styles.css">
+    <style>
+        /* Стили для модального окна */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+        
+        .modal-title {
+            font-size: 24px;
+            color: #333;
+            margin: 0;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+        }
+        
+        .modal-close:hover {
+            color: #333;
+        }
+        
+        .data-review {
+            margin-bottom: 25px;
+        }
+        
+        .data-item {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .data-label {
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        
+        .data-value {
+            color: #333;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .modal-btn--confirm {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .modal-btn--confirm:hover {
+            background-color: #218838;
+        }
+        
+        .modal-btn--edit {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .modal-btn--edit:hover {
+            background-color: #5a6268;
+        }
+        
+        .success-modal {
+            text-align: center;
+        }
+        
+        .success-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        
+        /* Стили для FAQ */
+        .faq__answer {
+            display: none;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 0 0 5px 5px;
+        }
+        
+        .faq__question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 5px;
+        }
+        
+        .faq__question:hover {
+            background-color: #dee2e6;
+        }
+        
+        /* Стили для контактной формы */
+        .contact-form__btn--submit {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .contact-form__btn--reset {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .contact-form__btn {
+            margin-right: 10px;
+        }
+    </style>
 </head>
-
 <body class="page">
     <!-- Шапка сайта -->
     <header class="header">
-        <nav class="navbar navbar-expand-lg navbar-dark header__navbar">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand header__brand" href="index.html">Мой Сайт</a>
+                <a class="navbar-brand" href="index.html">Мой Сайт</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto header__nav-list">
-                        <li class="nav-item header__nav-item">
-                            <a class="nav-link header__nav-link" href="index.html">Главная</a>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Главная</a>
                         </li>
-                        <li class="nav-item header__nav-item">
-                            <a class="nav-link header__nav-link header__nav-link--active"
-                                href="products.html">Товары</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="products.html">Товары</a>
                         </li>
-                        <li class="nav-item header__nav-item">
-                            <a class="nav-link header__nav-link" href="about.html">О нас</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href="about.html">О нас</a>
                         </li>
-                        <li class="nav-item header__nav-item">
-                            <a class="nav-link header__nav-link" href="contacts.html">Контакты</a>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="contacts.html">Контакты</a>
                         </li>
                         <button id="themeToggle" class="btn btn-light ms-3">
-                            сменить тему
+                            Сделать DarkCyan
                         </button>
-                        <script src="theme_toggle.js"></script>
-
                     </ul>
                 </div>
             </div>
@@ -46,193 +194,234 @@
 
     <!-- Основной контент -->
     <main class="main">
-        <div class="container">
-            <h1 class="page__title">Наши товары</h1>
+        <div class="container mt-4">
+            <h1 class="mb-4">Свяжитесь с нами</h1>
 
-            <!-- Фильтры -->
-            <section class="filters">
-                <h2 class="filters__title">Категории товаров</h2>
-                <div class="filters__buttons">
-                    <button class="filter-btn filter-btn--active" data-category="all">Все товары</button>
-                    <button class="filter-btn" data-category="electronics">Электроника</button>
-                    <button class="filter-btn" data-category="clothing">Одежда</button>
-                    <button class="filter-btn" data-category="home">Дом</button>
-                    <button class="filter-btn" data-category="sports">Спорт</button>
-                </div>
-            </section>
-
-            <!-- Товары -->
-            <section class="products">
-                <div class="products__grid">
-                    <!-- Электроника -->
-                    <div class="product-card" data-category="electronics">
-                        <div class="product-card__image">
-                            <div class="product-card__icon">📱</div>
-                        </div>
-                        <div class="product-card__info">
-                            <h3 class="product-card__title">Смартфон Galaxy Pro</h3>
-                            <p class="product-card__description">
-                                Современный смартфон с отличной камерой и долгой работой батареи.
-                            </p>
-                            <div class="product-card__price">45 990 ₽</div>
-                            <button class="btn product-card__btn">В корзину</button>
-                        </div>
-                    </div>
-
-                    <div class="product-card" data-category="electronics">
-                        <div class="product-card__image">
-                            <div class="product-card__icon">💻</div>
-                        </div>
-                        <div class="product-card__info">
-                            <h3 class="product-card__title">Ноутбук UltraBook</h3>
-                            <p class="product-card__description">
-                                Легкий и мощный ноутбук для работы и развлечений.
-                            </p>
-                            <div class="product-card__price">89 990 ₽</div>
-                            <button class="btn product-card__btn">В корзину</button>
-                        </div>
-                    </div>
-
-                    <div class="product-card" data-category="electronics">
-                        <div class="product-card__image">
-                            <div class="product-card__icon">🎧</div>
-                        </div>
-                        <div class="product-card__info">
-                            <h3 class="product-card__title">Беспроводные наушники</h3>
-                            <p class="product-card__description">
-                                Качественный звук и активное шумоподавление.
-                            </p>
-                            <div class="product-card__price">12 990 ₽</div>
-                            <button class="btn product-card__btn">В корзину</button>
-                        </div>
-                    </div>
-
-                    <!-- Одежда -->
-                    <div class="product-card" data-category="clothing">
-                        <div class="product-card__image">
-                            <div class="product-card__icon">👕</div>
-                        </div>
-                        <div class="product-card__info">
-                            <h3 class="product-card__title">Футболка Premium</h3>
-                            <p class="product-card__description">
-                                Комфортная футболка из натурального хлопка.
-                            </p>
-                            <div class="product-card__price">2 490 ₽</div>
-                            <button class="btn product-card__btn">В корзину</button>
-                        </div>
-                    </div>
-
-                    <div class="product-card" data-category="clothing">
-                        <div class="product-card__image">
-                            <div class="product-card__icon">👖</div>
-                        </div>
-                        <div class="product-card__info">
-                            <h3 class="product-card__title">Джинсы Classic</h3>
-                            <p class="product-card__description">
-                                Классические джинсы прямого кроя из качественного денима.
-                            </p>
-                            <div class="product-card__price">4 990 ₽</div>
-                            <button class="btn product-card__btn">В корзину</button>
-                        </div>
-                    </div>
-
-                    <div class="product-card" data-category="clothing">
-                        <div class="product-card__image">
-                            <div class="product-card__icon">🧥</div>
-                        </div>
-                        <div class="product-card__info">
-                            <h3 class="product-card__title">Куртка Winter Pro</h3>
-                            <p class="product-card__description">
-                                Теплая зимняя куртка с водоотталкивающей пропиткой.
-                            </p>
-                            <div class="product-card__price">8 990 ₽</div>
-                            <button class="btn product-card__btn">В корзину</button>
-                        </div>
-                    </div>
-
-                    <!-- Дом -->
-                    <div class="product-card" data-category="home">
-                        <div class="product-card__image">
-                            <div class="product-card__icon">☕</div>
-                        </div>
-                        <div class="product-card__info">
-                            <h3 class="product-card__title">Кофемашина DeluxeHome</h3>
-                            <p class="product-card__description">
-                                Автоматическая кофемашина для приготовления идеального кофе.
-                            </p>
-                            <div class="product-card__price">25 990 ₽</div>
-                            <button class="btn product-card__btn">В корзину</button>
-                        </div>
-                    </div>
-
-                    <div class="product-card" data-category="home">
-                        <div class="product-card__image">
-                            <div class="product-card__icon">🪑</div>
-                        </div>
-                        <div class="product-card__info">
-                            <h3 class="product-card__title">Офисное кресло Comfort</h3>
-                            <p class="product-card__description">
-                                Эргономичное кресло для комфортной работы за компьютером.
-                            </p>
-                            <div class="product-card__price">15 990 ₽</div>
-                            <button class="btn product-card__btn">В корзину</button>
-                        </div>
-                    </div>
-
-                    <!-- Спорт -->
-                    <div class="product-card" data-category="sports">
-                        <div class="product-card__image">
-                            <div class="product-card__icon">👟</div>
-                        </div>
-                        <div class="product-card__info">
-                            <h3 class="product-card__title">Кроссовки RunnerPro</h3>
-                            <p class="product-card__description">
-                                Профессиональные беговые кроссовки с амортизацией.
-                            </p>
-                            <div class="product-card__price">7 990 ₽</div>
-                            <button class="btn product-card__btn">В корзину</button>
-                        </div>
-                    </div>
-
-                    <div class="product-card" data-category="sports">
-                        <div class="product-card__image">
-                            <div class="product-card__icon">🏋️</div>
-                        </div>
-                        <div class="product-card__info">
-                            <h3 class="product-card__title">Набор гантелей FitnessPro</h3>
-                            <p class="product-card__description">
-                                Регулируемые гантели для домашних тренировок.
-                            </p>
-                            <div class="product-card__price">12 990 ₽</div>
-                            <button class="btn product-card__btn">В корзину</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Информация о доставке -->
-            <section class="delivery">
-                <h2 class="delivery__title">Информация о доставке</h2>
+            <!-- Контактная информация -->
+            <section class="contact-info mb-5">
                 <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <div class="delivery-card">
-                            <div class="delivery-card__icon">🚚</div>
-                            <h3 class="delivery-card__title">Быстрая доставка</h3>
-                            <p class="delivery-card__text">Доставка по городу в течение 1-2 дней</p>
+                    <!-- Email -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="h1">📧</div>
+                                <h5 class="card-title">Email</h5>
+                                <p class="card-text">zhuravlev.alexey@university.edu</p>
+                                <p class="card-text">info@ourcompany.ru</p>
+                                <small class="text-muted">Ответим в течение 24 часов</small>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="delivery-card">
-                            <div class="delivery-card__icon">📦</div>
-                            <h3 class="delivery-card__title">Бесплатная доставка</h3>
-                            <p class="delivery-card__text">При заказе от 3000 рублей</p>
+
+                    <!-- Телефон -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="h1">📱</div>
+                                <h5 class="card-title">Телефон</h5>
+                                <p class="card-text">+7 (999) 123-45-67</p>
+                                <p class="card-text">+7 (800) 555-35-35</p>
+                                <small class="text-muted">Пн-Пт: 9:00-18:00 МСК</small>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="delivery-card">
-                            <div class="delivery-card__icon">🔄</div>
-                            <h3 class="delivery-card__title">Возврат товара</h3>
-                            <p class="delivery-card__text">14 дней на возврат без объяснения причин</p>
+
+                    <!-- Адрес -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="h1">📍</div>
+                                <h5 class="card-title">Адрес</h5>
+                                <p class="card-text">г. Москва</p>
+                                <p class="card-text">ул. Университетская, 1</p>
+                                <small class="text-muted">Офис 203, 2 этаж</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Социальные сети -->
+                    <div class="col-lg-3 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <div class="h1">🌐</div>
+                                <h5 class="card-title">Социальные сети</h5>
+                                <p class="card-text">@zhuravlev_alexey</p>
+                                <p class="card-text">linkedin.com/in/zhuravlev</p>
+                                <small class="text-muted">Следите за новостями</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Форма обратной связи -->
+            <section class="contact-form mb-5">
+                <h2 class="mb-4">Отправьте нам сообщение</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="name" class="form-label">Имя *</label>
+                                        <input type="text" id="name" name="name" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">Email *</label>
+                                        <input type="email" id="email" name="email" class="form-control" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="phone" class="form-label">Телефон</label>
+                                        <input type="tel" id="phone" name="phone" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="subject" class="form-label">Тема обращения</label>
+                                        <select id="subject" name="subject" class="form-control">
+                                            <option value="">Выберите тему</option>
+                                            <option value="general">Общие вопросы</option>
+                                            <option value="support">Техническая поддержка</option>
+                                            <option value="partnership">Сотрудничество</option>
+                                            <option value="feedback">Отзыв</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="form-group">
+                                    <label for="message" class="form-label">Сообщение *</label>
+                                    <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn contact-form__btn contact-form__btn--submit">
+                                    📧 Отправить сообщение
+                                </button>
+                                <button type="reset" class="btn contact-form__btn contact-form__btn--reset">
+                                    🔄 Очистить форму
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Модальное окно подтверждения данных -->
+            <div class="modal-overlay" id="confirmationModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Проверьте ваши данные</h2>
+                        <button class="modal-close" id="confirmationModalClose">&times;</button>
+                    </div>
+                    <div class="data-review">
+                        <div class="data-item">
+                            <div class="data-label">Имя:</div>
+                            <div class="data-value" id="reviewName"></div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Email:</div>
+                            <div class="data-value" id="reviewEmail"></div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Телефон:</div>
+                            <div class="data-value" id="reviewPhone"></div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Тема обращения:</div>
+                            <div class="data-value" id="reviewSubject"></div>
+                        </div>
+                        <div class="data-item">
+                            <div class="data-label">Сообщение:</div>
+                            <div class="data-value" id="reviewMessage"></div>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="modal-btn modal-btn--edit" id="editDataBtn">Редактировать</button>
+                        <button class="modal-btn modal-btn--confirm" id="confirmDataBtn">Подтвердить отправку</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Модальное окно успешной отправки -->
+            <div class="modal-overlay" id="successModal">
+                <div class="modal-content success-modal">
+                    <div class="success-icon">✅</div>
+                    <h2 class="modal-title">Сообщение отправлено!</h2>
+                    <p class="mb-4">Мы получили ваше сообщение и свяжемся с вами в ближайшее время. Обычно мы отвечаем в течение 24 часов в рабочие дни.</p>
+                    <button class="modal-btn modal-btn--confirm" id="successModalClose">Закрыть</button>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <section class="faq mb-5">
+                <h2 class="mb-4">Часто задаваемые вопросы</h2>
+                <div class="faq__list">
+                    <div class="faq__item">
+                        <div class="faq__question">
+                            <span>Как быстро вы отвечаете на сообщения?</span>
+                            <span class="faq__toggle">+</span>
+                        </div>
+                        <div class="faq__answer">
+                            <p>Мы стараемся отвечать на все сообщения в течение 24 часов в рабочие дни. Срочные вопросы можете задать по телефону.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq__item">
+                        <div class="faq__question">
+                            <span>Можно ли встретиться лично?</span>
+                            <span class="faq__toggle">+</span>
+                        </div>
+                        <div class="faq__answer">
+                            <p>Да, мы можем организовать личную встречу в нашем офисе. Предварительно свяжитесь с нами для согласования времени.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq__item">
+                        <div class="faq__question">
+                            <span>Какие часы работы колл-центра?</span>
+                            <span class="faq__toggle">+</span>
+                        </div>
+                        <div class="faq__answer">
+                            <p>Наш колл-центр работает с понедельника по пятницу с 9:00 до 18:00 по московскому времени. В это время вы гарантированно получите быстрый ответ.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq__item">
+                        <div class="faq__question">
+                            <span>Есть ли техническая поддержка?</span>
+                            <span class="faq__toggle">+</span>
+                        </div>
+                        <div class="faq__answer">
+                            <p>Да, у нас есть отдел технической поддержки. Выберите соответствующую тему в форме обращения или позвоните по указанному телефону.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Офис -->
+            <section class="office">
+                <h2 class="mb-4">Как нас найти</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Наш офис</h3>
+                        <p class="card-text">г. Москва, ул. Университетская, 1</p>
+                        <p class="card-text">Офис 203, 2 этаж</p>
+
+                        <div class="office__map mt-4">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <div class="h1">🗺️</div>
+                                    <h4 class="card-title">Интерактивная карта</h4>
+                                    <p class="card-text">Здесь будет располагаться карта с местоположением офиса</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -241,59 +430,105 @@
     </main>
 
     <!-- Подвал -->
-    <footer class="footer">
+    <footer class="footer bg-dark text-white mt-5 py-4">
         <div class="container">
-            <div class="footer__content">
-                <p class="footer__text">&copy; 2024 Журавлев Алексей Игоревич. Все права защищены.</p>
+            <div class="footer__content text-center">
+                <p class="footer__text mb-0">&copy; 2024 Журавлев Алексей Игоревич. Все права защищены.</p>
             </div>
         </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Функция фильтрации товаров
-        document.addEventListener('DOMContentLoaded', function () {
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const productCards = document.querySelectorAll('.product-card');
-
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const category = this.dataset.category;
-
-                    // Убираем активный класс у всех кнопок
-                    filterButtons.forEach(btn => btn.classList.remove('filter-btn--active'));
-                    // Добавляем активный класс к нажатой кнопке
-                    this.classList.add('filter-btn--active');
-
-                    // Фильтруем товары
-                    productCards.forEach(card => {
-                        if (category === 'all' || card.dataset.category === category) {
-                            card.style.display = 'flex';
-                            card.classList.remove('product-card--hidden');
-                        } else {
-                            card.style.display = 'none';
-                            card.classList.add('product-card--hidden');
-                        }
-                    });
-                });
-            });
-
-            // Анимация при добавлении в корзину
-            const addToCartButtons = document.querySelectorAll('.product-card__btn');
-            addToCartButtons.forEach(button => {
-                button.addEventListener('click', function () {
-                    const originalText = this.textContent;
-                    this.textContent = '✓ Добавлено';
-                    this.style.backgroundColor = '#28a745';
-
-                    setTimeout(() => {
-                        this.textContent = originalText;
-                        this.style.backgroundColor = '';
-                    }, 1500);
-                });
+        // Обработка отправки формы
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Получаем значения из формы
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Заполняем модальное окно данными
+            document.getElementById('reviewName').textContent = name || 'Не указано';
+            document.getElementById('reviewEmail').textContent = email || 'Не указано';
+            document.getElementById('reviewPhone').textContent = phone || 'Не указано';
+            
+            // Преобразуем значение темы в читаемый текст
+            const subjectText = {
+                '': 'Не указано',
+                'general': 'Общие вопросы',
+                'support': 'Техническая поддержка',
+                'partnership': 'Сотрудничество',
+                'feedback': 'Отзыв'
+            }[subject];
+            
+            document.getElementById('reviewSubject').textContent = subjectText;
+            document.getElementById('reviewMessage').textContent = message || 'Не указано';
+            
+            // Показываем модальное окно подтверждения
+            document.getElementById('confirmationModal').style.display = 'flex';
+        });
+        
+        // Кнопка редактирования в модальном окне
+        document.getElementById('editDataBtn').addEventListener('click', function() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        });
+        
+        // Кнопка подтверждения отправки
+        document.getElementById('confirmDataBtn').addEventListener('click', function() {
+            // Закрываем модальное окно подтверждения
+            document.getElementById('confirmationModal').style.display = 'none';
+            
+            // Здесь обычно код для отправки данных формы на сервер
+            
+            // Показываем модальное окно успеха
+            document.getElementById('successModal').style.display = 'flex';
+            
+            // Очищаем форму
+            document.getElementById('contactForm').reset();
+        });
+        
+        // Закрытие модального окна подтверждения
+        document.getElementById('confirmationModalClose').addEventListener('click', function() {
+            document.getElementById('confirmationModal').style.display = 'none';
+        });
+        
+        // Закрытие модального окна успеха
+        document.getElementById('successModalClose').addEventListener('click', function() {
+            document.getElementById('successModal').style.display = 'none';
+        });
+        
+        // Закрытие модальных окон при клике вне их
+        document.getElementById('confirmationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+        
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+        
+        // Обработка FAQ
+        document.querySelectorAll('.faq__question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const toggle = question.querySelector('.faq__toggle');
+                
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    toggle.textContent = '+';
+                } else {
+                    answer.style.display = 'block';
+                    toggle.textContent = '-';
+                }
             });
         });
     </script>
 </body>
-
 </html>
