@@ -5,7 +5,472 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Контакты</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="style/styles.css">
+    <style>
+        /* Общие стили страницы */
+        .page {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .main {
+            flex-grow: 1;
+            padding: 2rem 0;
+        }
+        
+        .page__title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #343a40;
+            font-weight: 700;
+        }
+        
+        /* Шапка */
+        .header__navbar {
+            background-color: #343a40;
+        }
+        
+        .header__nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .header__nav-link:hover {
+            color: #007bff !important;
+        }
+        
+        .header__nav-link--active {
+            color: #007bff !important;
+            font-weight: 600;
+        }
+        
+        /* Подвал */
+        .footer {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 1.5rem 0;
+            margin-top: auto;
+        }
+        
+        .footer__text {
+            margin-bottom: 0;
+            text-align: center;
+            color: #dee2e6;
+        }
+        
+        /* Контактная информация */
+        .contact-info {
+            margin-bottom: 3rem;
+        }
+        
+        .contact-item {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .contact-item__icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+            text-align: center;
+        }
+        
+        .contact-item__title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #343a40;
+            font-weight: 600;
+        }
+        
+        .contact-item__text {
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+        
+        .contact-item__note {
+            color: #6c757d;
+            font-style: italic;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+        
+        /* Кнопка открытия формы - СДЕЛАНА ЗАМЕТНОЙ */
+        .open-form-btn {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: 700;
+            transition: all 0.3s;
+            display: block;
+            margin: 3rem auto;
+            box-shadow: 0 6px 12px rgba(0, 123, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .open-form-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 123, 255, 0.5);
+            background: linear-gradient(135deg, #0056b3, #004085);
+        }
+        
+        .open-form-btn:active {
+            transform: translateY(-2px);
+        }
+        
+        .open-form-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .open-form-btn:hover::after {
+            left: 100%;
+        }
+        
+        /* Модальное окно - УЛУЧШЕННЫЙ ДИЗАЙН */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 2.5rem;
+            border-radius: 15px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid #ced4da;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 1.5rem;
+        }
+        
+        .modal-title {
+            font-size: 1.75rem;
+            color: #343a40;
+            margin: 0;
+            font-weight: 700;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #6c757d;
+            transition: color 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .modal-close:hover {
+            color: #343a40;
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        /* УЛУЧШЕННЫЕ ПОЛЯ ВВОДА С ПОДСКАЗКАМИ */
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 8px;
+            display: block;
+            font-size: 1rem;
+        }
+        
+        .form-control {
+            border-radius: 8px;
+            border: 2px solid #ced4da;
+            padding: 12px 15px;
+            transition: all 0.3s;
+            font-size: 1rem;
+            background-color: white;
+        }
+        
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.2);
+            background-color: #fff;
+        }
+        
+        .form-hint {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .required-field::after {
+            content: " *";
+            color: #dc3545;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .modal-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .modal-btn--submit {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 123, 255, 0.3);
+        }
+        
+        .modal-btn--submit:hover {
+            background: linear-gradient(135deg, #0056b3, #004085);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 123, 255, 0.4);
+        }
+        
+        .modal-btn--cancel {
+            background-color: #6c757d;
+            color: white;
+            box-shadow: 0 4px 6px rgba(108, 117, 125, 0.3);
+        }
+        
+        .modal-btn--cancel:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(108, 117, 125, 0.4);
+        }
+        
+        /* Модальное окно успеха */
+        .success-modal {
+            text-align: center;
+        }
+        
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            color: #28a745;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* FAQ */
+        .faq {
+            margin-bottom: 3rem;
+        }
+        
+        .faq__title {
+            margin-bottom: 1.5rem;
+            color: #343a40;
+            font-weight: 600;
+        }
+        
+        .faq__list {
+            margin-top: 1rem;
+        }
+        
+        .faq__item {
+            margin-bottom: 0.75rem;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+        }
+        
+        .faq__question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: #343a40;
+        }
+        
+        .faq__question:hover {
+            background: #e9ecef;
+        }
+        
+        .faq__answer {
+            display: none;
+            padding: 1.25rem;
+            background-color: #ffffff;
+            border-top: 1px solid #e9ecef;
+            color: #495057;
+            line-height: 1.6;
+        }
+        
+        .faq__toggle {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #007bff;
+        }
+        
+        /* Офис */
+        .office {
+            margin-bottom: 2rem;
+        }
+        
+        .office__title {
+            margin-bottom: 1.5rem;
+            color: #343a40;
+            font-weight: 600;
+        }
+        
+        .office__info {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .office__subtitle {
+            color: #495057;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .office__address, .office__details {
+            color: #495057;
+            margin-bottom: 0.75rem;
+        }
+        
+        .map-placeholder {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            border: 2px dashed #dee2e6;
+        }
+        
+        .map-placeholder__icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #6c757d;
+        }
+        
+        .map-placeholder__title {
+            color: #343a40;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .map-placeholder__text {
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+        
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .contact-item {
+                padding: 1.25rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .modal-actions {
+                flex-direction: column;
+            }
+            
+            .modal-btn {
+                width: 100%;
+            }
+            
+            .open-form-btn {
+                padding: 14px 30px;
+                font-size: 18px;
+                margin: 2rem auto;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page__title {
+                font-size: 1.75rem;
+            }
+            
+            .contact-item__icon {
+                font-size: 2.5rem;
+            }
+            
+            .open-form-btn {
+                width: 90%;
+                margin: 1.5rem auto;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
 </head>
 <body class="page">
     <!-- Шапка сайта -->
@@ -31,10 +496,8 @@
                             <a class="nav-link header__nav-link header__nav-link--active" href="contacts.html">Контакты</a>
                         </li>
                         <button id="themeToggle" class="btn btn-light ms-3">
-                            Сделать DarkCyan
+                            сменить тему
                         </button>
-                        <script src="theme_toggle.js"></script>
-
                     </ul>
                 </div>
             </div>
@@ -45,6 +508,11 @@
     <main class="main">
         <div class="container">
             <h1 class="page__title">Свяжитесь с нами</h1>
+
+            <!-- Кнопка открытия формы - СДЕЛАНА ЗАМЕТНОЙ -->
+            <button class="open-form-btn" id="openFormBtn">
+                📧 Отправить нам запрос
+            </button>
 
             <!-- Контактная информация -->
             <section class="contact-info">
@@ -103,15 +571,78 @@
                 </div>
             </section>
 
-            <!-- Кнопка для открытия модального окна -->
-            <section class="contact-form">
-                <h2 class="contact-form__title">Отправьте нам сообщение</h2>
-                <div class="contact-form__container text-center">
-                    <button type="button" class="btn contact-form__btn contact-form__btn--submit" data-bs-toggle="modal" data-bs-target="#contactModal">
-                        📧 Отправить нам запрос
-                    </button>
+            <!-- Модальное окно с формой - УЛУЧШЕННЫЙ ДИЗАЙН -->
+            <div class="modal-overlay" id="formModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">Отправьте нам сообщение</h2>
+                        <button class="modal-close" id="formModalClose">&times;</button>
+                    </div>
+                    <form id="contactForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="name" class="form-label required-field">Имя</label>
+                                    <input type="text" id="name" name="name" class="form-control" required placeholder="Введите ваше имя">
+                                    <small class="form-hint">Например: Иван Иванов</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="email" class="form-label required-field">Email</label>
+                                    <input type="email" id="email" name="email" class="form-control" required placeholder="example@mail.ru">
+                                    <small class="form-hint">Мы отправим ответ на этот адрес</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Телефон</label>
+                                    <input type="tel" id="phone" name="phone" class="form-control" placeholder="+7 (999) 123-45-67">
+                                    <small class="form-hint">Необязательно, но поможет быстрее связаться</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="form-group">
+                                    <label for="subject" class="form-label">Тема обращения</label>
+                                    <select id="subject" name="subject" class="form-control">
+                                        <option value="">Выберите тему обращения</option>
+                                        <option value="general">Общие вопросы</option>
+                                        <option value="support">Техническая поддержка</option>
+                                        <option value="partnership">Сотрудничество</option>
+                                        <option value="feedback">Отзыв о работе</option>
+                                    </select>
+                                    <small class="form-hint">Выберите наиболее подходящую категорию</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-group">
+                                <label for="message" class="form-label required-field">Сообщение</label>
+                                <textarea id="message" name="message" rows="5" class="form-control" required placeholder="Опишите ваш вопрос или предложение..."></textarea>
+                                <small class="form-hint">Чем подробнее вы опишете ситуацию, тем точнее мы сможем помочь</small>
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="button" class="modal-btn modal-btn--cancel" id="cancelFormBtn">Отмена</button>
+                            <button type="submit" class="modal-btn modal-btn--submit">
+                                📧 Отправить сообщение
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </section>
+            </div>
+
+            <!-- Модальное окно успешной отправки -->
+            <div class="modal-overlay" id="successModal">
+                <div class="modal-content success-modal">
+                    <div class="success-icon">✅</div>
+                    <h2 class="modal-title">Сообщение отправлено!</h2>
+                    <p class="mb-4">Мы получили ваше сообщение и свяжемся с вами в ближайшее время. Обычно мы отвечаем в течение 24 часов в рабочие дни.</p>
+                    <button class="modal-btn modal-btn--submit" id="successModalClose">Закрыть</button>
+                </div>
+            </div>
 
             <!-- FAQ -->
             <section class="faq">
@@ -188,71 +719,72 @@
         </div>
     </footer>
 
-    <!-- Модальное окно с формой -->
-    <div class="modal fade" id="contactModal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="contactModalLabel">Отправьте нам сообщение</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form class="contact-form__form">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                    <label for="name" class="form-label">Имя *</label>
-                                    <input type="text" id="name" name="name" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                    <label for="email" class="form-label">Email *</label>
-                                    <input type="email" id="email" name="email" class="form-control" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                    <label for="phone" class="form-label">Телефон</label>
-                                    <input type="tel" id="phone" name="phone" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <div class="form-group">
-                                    <label for="subject" class="form-label">Тема обращения</label>
-                                    <select id="subject" name="subject" class="form-control">
-                                        <option value="">Выберите тему</option>
-                                        <option value="general">Общие вопросы</option>
-                                        <option value="support">Техническая поддержка</option>
-                                        <option value="partnership">Сотрудничество</option>
-                                        <option value="feedback">Отзыв</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-group">
-                                <label for="message" class="form-label">Сообщение *</label>
-                                <textarea id="message" name="message" rows="5" class="form-control" required></textarea>
-                            </div>
-                        </div>
-                        <div class="form-actions">
-                            <button type="submit" class="btn contact-form__btn contact-form__btn--submit">
-                                📧 Отправить сообщение
-                            </button>
-                            <button type="reset" class="btn contact-form__btn contact-form__btn--reset">
-                                🔄 Очистить форму
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        // Открытие модального окна с формой
+        document.getElementById('openFormBtn').addEventListener('click', function() {
+            document.getElementById('formModal').style.display = 'flex';
+        });
+        
+        // Закрытие модального окна с формой
+        document.getElementById('formModalClose').addEventListener('click', function() {
+            document.getElementById('formModal').style.display = 'none';
+        });
+        
+        // Отмена заполнения формы
+        document.getElementById('cancelFormBtn').addEventListener('click', function() {
+            document.getElementById('formModal').style.display = 'none';
+        });
+        
+        // Обработка отправки формы
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Здесь обычно код для отправки данных формы на сервер
+            
+            // Закрываем модальное окно с формой
+            document.getElementById('formModal').style.display = 'none';
+            
+            // Показываем модальное окно успеха
+            document.getElementById('successModal').style.display = 'flex';
+            
+            // Очищаем форму
+            this.reset();
+        });
+        
+        // Закрытие модального окна успеха
+        document.getElementById('successModalClose').addEventListener('click', function() {
+            document.getElementById('successModal').style.display = 'none';
+        });
+        
+        // Закрытие модальных окон при клике вне их
+        document.getElementById('formModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+        
+        document.getElementById('successModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+        
+        // Обработка FAQ
+        document.querySelectorAll('.faq__question').forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const toggle = question.querySelector('.faq__toggle');
+                
+                if (answer.style.display === 'block') {
+                    answer.style.display = 'none';
+                    toggle.textContent = '+';
+                } else {
+                    answer.style.display = 'block';
+                    toggle.textContent = '-';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
