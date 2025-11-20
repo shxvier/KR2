@@ -104,7 +104,7 @@
         
         /* Стили для кнопки открытия формы */
         .open-form-btn {
-            background-color: #28a745;
+            background-color: #007bff;
             color: white;
             border: none;
             padding: 12px 25px;
@@ -117,15 +117,81 @@
         }
         
         .open-form-btn:hover {
-            background-color: #218838;
+            background-color: #0056b3;
+        }
+        
+        /* Стили для контактной информации */
+        .contact-item {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-item__icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .contact-item__title {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .contact-item__text {
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        .contact-item__note {
+            color: #777;
+            font-style: italic;
+        }
+        
+        /* Стили для формы */
+        .contact-form__btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        
+        .contact-form__btn--submit {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        .contact-form__btn--submit:hover {
+            background-color: #0056b3;
+        }
+        
+        .contact-form__btn--reset {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .contact-form__btn--reset:hover {
+            background-color: #5a6268;
         }
         
         /* Стили для FAQ */
-        .faq__answer {
-            display: none;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 0 0 5px 5px;
+        .faq__list {
+            margin-top: 20px;
+        }
+        
+        .faq__item {
+            margin-bottom: 10px;
+            border-radius: 5px;
+            overflow: hidden;
         }
         
         .faq__question {
@@ -134,47 +200,91 @@
             align-items: center;
             padding: 15px;
             background-color: #e9ecef;
-            border-radius: 5px;
             cursor: pointer;
-            margin-bottom: 5px;
+            transition: background-color 0.3s;
         }
         
         .faq__question:hover {
             background-color: #dee2e6;
         }
         
-        /* Стили для контактной информации */
-        .contact-item {
-            transition: transform 0.3s;
+        .faq__answer {
+            display: none;
+            padding: 15px;
+            background-color: #f8f9fa;
         }
         
-        .contact-item:hover {
-            transform: translateY(-5px);
+        /* Стили для офиса */
+        .office__info {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .map-placeholder {
+            text-align: center;
+            padding: 30px;
+            background-color: #e9ecef;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .map-placeholder__icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        /* Общие стили */
+        .page__title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        
+        .contact-form__title, .faq__title, .office__title {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .header__navbar {
+            background-color: #343a40;
+        }
+        
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        
+        .form-control {
+            border-radius: 5px;
         }
     </style>
 </head>
 <body class="page">
     <!-- Шапка сайта -->
     <header class="header">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark header__navbar">
             <div class="container">
-                <a class="navbar-brand" href="index.html">Мой Сайт</a>
+                <a class="navbar-brand header__brand" href="index.html">Мой Сайт</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">Главная</a>
+                    <ul class="navbar-nav ms-auto header__nav-list">
+                        <li class="nav-item header__nav-item">
+                            <a class="nav-link header__nav-link" href="index.html">Главная</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="products.html">Товары</a>
+                        <li class="nav-item header__nav-item">
+                            <a class="nav-link header__nav-link" href="products.html">Товары</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html">О нас</a>
+                        <li class="nav-item header__nav-item">
+                            <a class="nav-link header__nav-link" href="about.html">О нас</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="contacts.html">Контакты</a>
+                        <li class="nav-item header__nav-item">
+                            <a class="nav-link header__nav-link header__nav-link--active" href="contacts.html">Контакты</a>
                         </li>
                         <button id="themeToggle" class="btn btn-light ms-3">
                             Сделать DarkCyan
@@ -187,8 +297,8 @@
 
     <!-- Основной контент -->
     <main class="main">
-        <div class="container mt-4">
-            <h1 class="mb-4 text-center">Свяжитесь с нами</h1>
+        <div class="container">
+            <h1 class="page__title">Свяжитесь с нами</h1>
 
             <!-- Кнопка открытия формы -->
             <button class="open-form-btn" id="openFormBtn">
@@ -196,56 +306,56 @@
             </button>
 
             <!-- Контактная информация -->
-            <section class="contact-info mb-5">
+            <section class="contact-info">
                 <div class="row">
                     <!-- Email -->
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="card h-100 contact-item">
-                            <div class="card-body text-center">
-                                <div class="h1">📧</div>
-                                <h5 class="card-title">Email</h5>
-                                <p class="card-text">zhuravlev.alexey@university.edu</p>
-                                <p class="card-text">info@ourcompany.ru</p>
-                                <small class="text-muted">Ответим в течение 24 часов</small>
+                        <div class="contact-item">
+                            <span class="contact-item__icon">📧</span>
+                            <div class="contact-item__content">
+                                <h3 class="contact-item__title">Email</h3>
+                                <p class="contact-item__text">zhuravlev.alexey@university.edu</p>
+                                <p class="contact-item__text">info@ourcompany.ru</p>
+                                <small class="contact-item__note">Ответим в течение 24 часов</small>
                             </div>
                         </div>
                     </div>
 
                     <!-- Телефон -->
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="card h-100 contact-item">
-                            <div class="card-body text-center">
-                                <div class="h1">📱</div>
-                                <h5 class="card-title">Телефон</h5>
-                                <p class="card-text">+7 (999) 123-45-67</p>
-                                <p class="card-text">+7 (800) 555-35-35</p>
-                                <small class="text-muted">Пн-Пт: 9:00-18:00 МСК</small>
+                        <div class="contact-item">
+                            <span class="contact-item__icon">📱</span>
+                            <div class="contact-item__content">
+                                <h3 class="contact-item__title">Телефон</h3>
+                                <p class="contact-item__text">+7 (999) 123-45-67</p>
+                                <p class="contact-item__text">+7 (800) 555-35-35</p>
+                                <small class="contact-item__note">Пн-Пт: 9:00-18:00 МСК</small>
                             </div>
                         </div>
                     </div>
 
                     <!-- Адрес -->
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="card h-100 contact-item">
-                            <div class="card-body text-center">
-                                <div class="h1">📍</div>
-                                <h5 class="card-title">Адрес</h5>
-                                <p class="card-text">г. Москва</p>
-                                <p class="card-text">ул. Университетская, 1</p>
-                                <small class="text-muted">Офис 203, 2 этаж</small>
+                        <div class="contact-item">
+                            <span class="contact-item__icon">📍</span>
+                            <div class="contact-item__content">
+                                <h3 class="contact-item__title">Адрес</h3>
+                                <p class="contact-item__text">г. Москва</p>
+                                <p class="contact-item__text">ул. Университетская, 1</p>
+                                <small class="contact-item__note">Офис 203, 2 этаж</small>
                             </div>
                         </div>
                     </div>
 
                     <!-- Социальные сети -->
                     <div class="col-lg-3 col-md-6 mb-4">
-                        <div class="card h-100 contact-item">
-                            <div class="card-body text-center">
-                                <div class="h1">🌐</div>
-                                <h5 class="card-title">Социальные сети</h5>
-                                <p class="card-text">@zhuravlev_alexey</p>
-                                <p class="card-text">linkedin.com/in/zhuravlev</p>
-                                <small class="text-muted">Следите за новостями</small>
+                        <div class="contact-item">
+                            <span class="contact-item__icon">🌐</span>
+                            <div class="contact-item__content">
+                                <h3 class="contact-item__title">Социальные сети</h3>
+                                <p class="contact-item__text">@zhuravlev_alexey</p>
+                                <p class="contact-item__text">linkedin.com/in/zhuravlev</p>
+                                <small class="contact-item__note">Следите за новостями</small>
                             </div>
                         </div>
                     </div>
@@ -321,8 +431,8 @@
             </div>
 
             <!-- FAQ -->
-            <section class="faq mb-5">
-                <h2 class="mb-4">Часто задаваемые вопросы</h2>
+            <section class="faq">
+                <h2 class="faq__title">Часто задаваемые вопросы</h2>
                 <div class="faq__list">
                     <div class="faq__item">
                         <div class="faq__question">
@@ -368,21 +478,17 @@
 
             <!-- Офис -->
             <section class="office">
-                <h2 class="mb-4">Как нас найти</h2>
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="card-title">Наш офис</h3>
-                        <p class="card-text">г. Москва, ул. Университетская, 1</p>
-                        <p class="card-text">Офис 203, 2 этаж</p>
+                <h2 class="office__title">Как нас найти</h2>
+                <div class="office__info">
+                    <h3 class="office__subtitle">Наш офис</h3>
+                    <p class="office__address">г. Москва, ул. Университетская, 1</p>
+                    <p class="office__details">Офис 203, 2 этаж</p>
 
-                        <div class="office__map mt-4">
-                            <div class="card">
-                                <div class="card-body text-center">
-                                    <div class="h1">🗺️</div>
-                                    <h4 class="card-title">Интерактивная карта</h4>
-                                    <p class="card-text">Здесь будет располагаться карта с местоположением офиса</p>
-                                </div>
-                            </div>
+                    <div class="office__map">
+                        <div class="map-placeholder">
+                            <div class="map-placeholder__icon">🗺️</div>
+                            <h4 class="map-placeholder__title">Интерактивная карта</h4>
+                            <p class="map-placeholder__text">Здесь будет располагаться карта с местоположением офиса</p>
                         </div>
                     </div>
                 </div>
@@ -391,10 +497,10 @@
     </main>
 
     <!-- Подвал -->
-    <footer class="footer bg-dark text-white mt-5 py-4">
+    <footer class="footer">
         <div class="container">
-            <div class="footer__content text-center">
-                <p class="footer__text mb-0">&copy; 2024 Журавлев Алексей Игоревич. Все права защищены.</p>
+            <div class="footer__content">
+                <p class="footer__text">&copy; 2024 Журавлев Алексей Игоревич. Все права защищены.</p>
             </div>
         </div>
     </footer>
