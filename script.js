@@ -163,3 +163,103 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// ========================================
+// МОДАЛЬНОЕ ОКНО - КОНТАКТНАЯ ФОРМА
+// ========================================
+
+// Получаем элементы
+const modal = document.getElementById('contactModal');
+const openBtn = document.getElementById('openContactModal');
+const closeBtn = document.getElementById('closeModal');
+const form = document.getElementById('contactForm');
+const notification = document.getElementById('notification');
+
+// Открыть модальное окно
+openBtn.addEventListener('click', () => {
+  modal.showModal();
+  // Фокус на первое поле формы
+  document.getElementById('name').focus();
+});
+
+// Закрыть модальное окно через кнопку
+closeBtn.addEventListener('click', () => {
+  modal.close();
+});
+
+// Закрыть при клике на backdrop (тёмный фон)
+modal.addEventListener('click', (e) => {
+  const rect = modal.getBoundingClientRect();
+  if (
+    e.clientX < rect.left ||
+    e.clientX > rect.right ||
+    e.clientY < rect.top ||
+    e.clientY > rect.bottom
+  ) {
+    modal.close();
+  }
+});
+
+// Закрыть по нажатию Escape
+modal.addEventListener('cancel', (e) => {
+  e.preventDefault();
+  modal.close();
+});
+
+// Обработка отправки формы
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  
+  // Получить данные формы
+  const formData = new FormData(form);
+  const data = {
+    name: formData.get('name'),
+    email: formData.get('email'),
+    message: formData.get('message')
+  };
+  
+  // Вывод в консоль для проверки
+  console.log('Отправка данных:', data);
+  
+  // ========================================
+  // ЗДЕСЬ ДОБАВЬТЕ КОД ДЛЯ ОТПРАВКИ НА СЕРВЕР
+  // ========================================
+  // Пример с FormSubmit.co:
+  /*
+  fetch('https://formsubmit.co/your-email@example.com', {
+    method: 'POST',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Успешно отправлено:', data);
+    showNotification();
+  })
+  .catch(error => {
+    console.error('Ошибка:', error);
+    alert('Ошибка при отправке сообщения');
+  });
+  */
+  
+  // Закрыть модальное окно
+  modal.close();
+  
+  // Очистить форму
+  form.reset();
+  
+  // Показать уведомление
+  showNotification();
+});
+
+// Функция показа уведомления
+function showNotification() {
+  notification.classList.remove('hidden');
+  
+  // Автоматически скрыть через 3 секунды
+  setTimeout(() => {
+    notification.classList.add('hidden');
+  }, 3000);
+}
