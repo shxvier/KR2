@@ -88,6 +88,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: var(--font-family-base);
     font-size: var(--font-size-base);
@@ -95,6 +99,14 @@ body {
     color: var(--color-text-primary);
     background: var(--color-bg-main);
     min-height: 100vh;
+    overflow-x: hidden; /* защита от горизонтального скролла */
+}
+
+/* Все изображения по умолчанию адаптивные */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 /* ===== БЭМ БЛОКИ ===== */
@@ -170,6 +182,7 @@ body {
     transition: var(--transition-normal);
     font-weight: var(--font-weight-medium);
     display: block;
+    white-space: nowrap;
 }
 
 .nav__link:hover,
@@ -423,24 +436,36 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
-/* Адаптивность */
+/* ===== АДАПТИВНОСТЬ ===== */
+
 @media (max-width: 768px) {
+    .page {
+        max-width: 100%;
+        margin: 0;
+        box-shadow: none;
+        min-height: 100vh;
+    }
+
+    .nav {
+        padding: var(--spacing-md) 0;
+    }
+
     .nav__list {
         flex-direction: column;
         gap: var(--spacing-sm);
         text-align: center;
+        align-items: center;
     }
 
-    .skills__grid {
-        grid-template-columns: 1fr;
-    }
-
-    .experience__grid {
-        grid-template-columns: 1fr;
+    .nav__link {
+        width: 100%;
+        max-width: 260px;
+        padding: var(--spacing-sm) var(--spacing-lg);
     }
 
     .main {
         padding: var(--spacing-lg);
+        width: 100%;
     }
 
     .header {
@@ -454,6 +479,21 @@ body {
     .profile__photo {
         width: 180px;
         height: 220px;
+    }
+
+    .skills__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .experience__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .theme-toggle {
+        width: 40px;
+        height: 40px;
+        top: var(--spacing-md);
+        right: var(--spacing-md);
     }
 }
 
@@ -469,5 +509,14 @@ body {
     .skills__item {
         padding: var(--spacing-sm) var(--spacing-md);
         font-size: var(--font-size-sm);
+    }
+
+    .header__title {
+        font-size: var(--font-size-xl);
+    }
+
+    .profile__photo {
+        width: 160px;
+        height: 200px;
     }
 }
