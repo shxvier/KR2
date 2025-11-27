@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практики - Портфолио</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; padding: 0; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            min-height: 100vh; 
+        } 
+        .page-container { 
+            max-width: 1200px; margin: 0 auto; background: white; 
+            min-height: 100vh; box-shadow: 0 0 30px rgba(0,0,0,0.1); 
+            display: grid; grid-template-rows: auto auto 1fr auto; 
+        } 
+        .header { 
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); 
+            color: white; text-align: center; padding: 30px; font-size: 28px; 
+        } 
+        .nav { 
+            background: #2c3e50; padding: 20px 0; 
+        } 
+        .nav-list { 
+            list-style: none; margin: 0; padding: 0; display: flex; 
+            justify-content: center; gap: 25px; 
+        } 
+        .nav-link { 
+            color: white; text-decoration: none; padding: 12px 25px; 
+            border-radius: 25px; transition: all 0.3s ease; font-weight: 500; 
+        } 
+        .nav-link:hover { 
+            background: rgba(255,255,255,0.1); transform: translateY(-2px); 
+        } 
+        .content { 
+            padding: 40px; max-width: 900px; margin: 0 auto; 
+        } 
+        .practices-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px; margin-top: 30px;
+        } 
+        .practice-card { 
+            background: white; padding: 25px; border-radius: 12px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); 
+            border-left: 4px solid #667eea; transition: transform 0.3s ease; 
+        } 
+        .practice-card:hover { transform: translateX(5px); } 
+        .practice-title { 
+            font-size: 20px; color: #2c3e50; margin: 0 0 10px 0; font-weight: 600; 
+        } 
+        .practice-desc { 
+            color: #7f8c8d; line-height: 1.6; margin: 0; 
+        } 
+        .footer { 
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); 
+            color: white; text-align: center; padding: 30px; margin-top: 50px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <header class="header">
+            <h1>💻 Практические работы</h1>
+        </header>
+
+        <nav class="nav">
+            <ul class="nav-list">
+                <li><a class="nav-link" href="../index.html">Главная</a></li>
+                <li><a class="nav-link" href="news.html">Новости</a></li>
+                <li><a class="nav-link" href="practices.html">Практики</a></li>
+                <li><a class="nav-link" href="goods.html">Товары</a></li>
+                <li><a class="nav-link" href="contacts.html">Контакты</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <section class="practices-grid">
+                <article class="practice-card">
+                    <h3 class="practice-title">Практика №7: HTML</h3>
+                    <p class="practice-desc">Создание базовой HTML структуры сайта с семантическими тегами header, nav, main, footer, section, article.</p>
+                </article>
+                
+                <article class="practice-card">
+                    <h3 class="practice-title">Практика №8: CSS</h3>
+                    <p class="practice-desc">Подключение внешних стилей CSS, создание современного дизайна с градиентами и анимациями.</p>
+                </article>
+                
+                <article class="practice-card">
+                    <h3 class="practice-title">Практика №9: Flex и Grid</h3>
+                    <p class="practice-desc">Использование CSS Grid и Flexbox для создания адаптивной верстки, работающей на всех устройствах.</p>
+                </article>
+                
+                <article class="practice-card">
+                    <h3 class="practice-title">Практика №10: Модальные окна</h3>
+                    <p class="practice-desc">Создание интерактивных модальных окон с формами обратной связи, использование JavaScript для взаимодействия.</p>
+                </article>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>© 2025 Все права защищены | Практические работы</p>
+        </footer>
+    </div>
+</body>
+</html>

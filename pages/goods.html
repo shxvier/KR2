@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Товары - Портфолио</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+    
+    <style>
+        /* Кастомные стили для товаров */
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            height: 250px;
+            object-fit: cover;
+            position: relative;
+        }
+        
+        /* Стили для скидки */
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        /* Стили для старой цены */
+        .old-price {
+            text-decoration: line-through;
+            color: #95a5a6;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        
+        .new-price {
+            color: #e74c3c;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        /* Стили для остатка товара */
+        .stock-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .stock-high {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .stock-medium {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .stock-low {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            animation: blink 1.5s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .stock-out {
+            background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+        
+        /* Кнопка заблокирована если товар закончился */
+        .btn-disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+        
+        /* Иконка для остатка */
+        .stock-icon {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    
+    <div class="container-fluid p-0">
+        
+        <!-- Header -->
+        <header class="bg-primary text-white py-4">
+            <div class="container">
+                <h1 class="h2 mb-0">
+                    <i class="bi bi-cart-fill me-2"></i>
+                    Каталог товаров
+                </h1>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="../index.html">
+                                <i class="bi bi-house me-1"></i>Главная
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="news.html">
+                                <i class="bi bi-newspaper me-1"></i>Новости
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="practices.html">
+                                <i class="bi bi-code-slash me-1"></i>Практики
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="goods.html">
+                                <i class="bi bi-cart me-1"></i>Товары
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contacts.html">
+                                <i class="bi bi-telephone me-1"></i>Контакты
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="container my-5">
+            
+            <!-- Page Header -->
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-primary mb-3">Товары для веб-разработчиков</h2>
+                <p class="lead text-muted">Все необходимое для успешного изучения программирования</p>
+                <div class="alert alert-info d-inline-block" role="alert">
+                    <i class="bi bi-tag-fill me-2"></i>
+                    <strong>Акция!</strong> Скидки до 25% на избранные товары
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="row g-4">
+                
+                <!-- Product 1 - СО СКИДКОЙ -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 shadow-sm product-card">
+                        <div class="position-relative">
+                            <img src="../images/goods1.jpg" class="card-img-top product-image" alt="Ноутбук">
+                            <!-- НОВОЕ: Бейдж скидки -->
+                            <span class="discount-badge">-15%</span>
+                            <span class="position-absolute top-0 end-0 m-2 badge bg-success">Популярное</span>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary">
+                                <i class="bi bi-laptop me-2"></i>
+                                Ноутбук для разработки
+                            </h5>
+                            <p class="card-text">Мощный ноутбук для программирования и веб-разработки. Подходит для работы с IDE, компиляции и тестирования.</p>
+                            
+                            <!-- НОВОЕ: Остаток товара -->
+                            <div class="stock-info stock-medium">
+                                <i class="bi bi-box-seam stock-icon"></i>
+                                <span>Осталось: <strong>7 шт.</strong></span>
+                            </div>
+                            
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+                                    <div>
+                                        <!-- НОВОЕ: Старая и новая цена -->
+                                        <span class="old-price">58,823 ₽</span>
+                                        <span class="new-price">50,000 ₽</span>
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star text-warning"></i>
+                                        <span class="text-muted ms-1">(24)</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary w-100">
+                                    <i class="bi bi-cart-plus me-2"></i>
+                                    Добавить в корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 - БЕЗ СКИДКИ, МНОГО В НАЛИЧИИ -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 shadow-sm product-card">
+                        <div class="position-relative">
+                            <img src="../images/goods2.jpg" class="card-img-top product-image" alt="Смартфон">
+                            <span class="position-absolute top-0 end-0 m-2 badge bg-info">Новинка</span>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary">
+                                <i class="bi bi-phone me-2"></i>
+                                Смартфон
+                            </h5>
+                            <p class="card-text">Современный смартфон для тестирования мобильной версии сайтов и приложений.</p>
+                            
+                            <!-- НОВОЕ: Много товара в наличии -->
+                            <div class="stock-info stock-high">
+                                <i class="bi bi-check-circle-fill stock-icon"></i>
+                                <span>В наличии: <strong>24 шт.</strong></span>
+                            </div>
+                            
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+                                    <span class="new-price">25,000 ₽</span>
+                                    <div>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <span class="text-muted ms-1">(18)</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary w-100">
+                                    <i class="bi bi-cart-plus me-2"></i>
+                                    Добавить в корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 - СО СКИДКОЙ, МАЛО В НАЛИЧИИ -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 shadow-sm product-card">
+                        <div class="position-relative">
+                            <img src="../images/goods3.jpg" class="card-img-top product-image" alt="Монитор">
+                            <!-- НОВОЕ: Большая скидка -->
+                            <span class="discount-badge">-25%</span>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title text-primary">
+                                <i class="bi bi-display me-2"></i>
+                                Монитор 4K
+                            </h5>
+                            <p class="card-text">Широкий монитор 4K для комфортной работы с кодом и многозадачности.</p>
+                            
+                            <!-- НОВОЕ: Мало товара - мигает -->
+                            <div class="stock-info stock-low">
+                                <i class="bi bi-exclamation-triangle-fill stock-icon"></i>
+                                <span>Осталось всего: <strong>2 шт.</strong></span>
+                            </div>
+                            
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+                                    <div>
+                                        <span class="old-price">40,000 ₽</span>
+                                        <span class="new-price">30,000 ₽</span>
+                                    </div>
+                                    <div>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star text-warning"></i>
+                                        <span class="text-muted ms-1">(31)</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary w-100">
+                                    <i class="bi bi-cart-plus me-2"></i>
+                                    Добавить в корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 4 - БЕЗ СКИДКИ -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 shadow-sm product-card">
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-center mb-3">
+                                <i class="bi bi-keyboard display-1 text-primary"></i>
+                            </div>
+                            <h5 class="card-title text-primary text-center">
+                                Механическая клавиатура
+                            </h5>
+                            <p class="card-text">Эргономичная механическая клавиатура для программистов с подсветкой.</p>
+                            
+                            <!-- НОВОЕ: Средний остаток -->
+                            <div class="stock-info stock-medium">
+                                <i class="bi bi-box-seam stock-icon"></i>
+                                <span>Осталось: <strong>12 шт.</strong></span>
+                            </div>
+                            
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+                                    <span class="new-price">8,000 ₽</span>
+                                    <div>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star text-warning"></i>
+                                        <i class="bi bi-star text-warning"></i>
+                                        <span class="text-muted ms-1">(12)</span>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary w-100">
+                                    <i class="bi bi-cart-plus me-2"></i>
+                                    Добавить в корзину
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 5 - СО СКИДКОЙ -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 shadow-sm product-card">
+                        <div class="position-relative">
+                            <div class="card-body d-flex flex-column">
+                                <!-- НОВОЕ: Скидка на товаре без изображения -->
+                                <div class="position-relative">
+                                    <div class="text-center mb-3">
+                                        <i class="bi bi-mouse display-1 text-primary"></i>
+                                    </div>
+                                    <span class="discount-badge" style="position: absolute; top: 0; left: 0;">-10%</span>
+                                </div>
+                                <h5 class="card-title text-primary text-center">
+                                    Беспроводная мышь
+                                </h5>
+                                <p class="card-text">Точная беспроводная мышь для дизайна и разработки интерфейсов.</p>
+                                
+                                <!-- НОВОЕ: Много в наличии -->
+                                <div class="stock-info stock-high">
+                                    <i class="bi bi-check-circle-fill stock-icon"></i>
+                                    <span>В наличии: <strong>45 шт.</strong></span>
+                                </div>
+                                
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+                                        <div>
+                                            <span class="old-price">3,333 ₽</span>
+                                            <span class="new-price">3,000 ₽</span>
+                                        </div>
+                                        <div>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                            <i class="bi bi-star text-warning"></i>
+                                            <span class="text-muted ms-1">(27)</span>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary w-100">
+                                        <i class="bi bi-cart-plus me-2"></i>
+                                        Добавить в корзину
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 6 - ТОВАР ЗАКОНЧИЛСЯ -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card h-100 shadow-sm product-card">
+                        <div class="card-body d-flex flex-column">
+                            <div class="text-center mb-3">
+                                <i class="bi bi-book display-1 text-secondary"></i>
+                            </div>
+                            <h5 class="card-title text-secondary text-center">
+                                Книги по программированию
+                            </h5>
+                            <p class="card-text">Учебные материалы и справочники по веб-разработке и программированию.</p>
+                            
+                            <!-- НОВОЕ: Товар закончился -->
+                            <div class="stock-info stock-out">
+                                <i class="bi bi-x-circle-fill stock-icon"></i>
+                                <span><strong>Нет в наличии</strong></span>
+                            </div>
+                            
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-3 mt-3">
+                                    <span class="new-price text-muted">2,500 ₽</span>
+                                    <div>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <i class="bi bi-star-fill text-warning"></i>
+                                        <span class="text-muted ms-1">(45)</span>
+                                    </div>
+                                </div>
+                                <!-- НОВОЕ: Кнопка заблокирована -->
+                                <button class="btn btn-secondary w-100 btn-disabled" disabled>
+                                    <i class="bi bi-x-circle me-2"></i>
+                                    Нет в наличии
+                                </button>
+                                <button class="btn btn-outline-primary w-100 mt-2">
+                                    <i class="bi bi-bell me-2"></i>
+                                    Уведомить о поступлении
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Дополнительная информация -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h4 class="card-title text-primary mb-4">
+                                <i class="bi bi-info-circle me-2"></i>
+                                Условия доставки и оплаты
+                            </h4>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-start mb-3">
+                                        <i class="bi bi-truck text-primary me-3" style="font-size: 24px;"></i>
+                                        <div>
+                                            <h6 class="mb-1">Бесплатная доставка</h6>
+                                            <p class="text-muted small mb-0">При заказе от 5,000 ₽</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-start mb-3">
+                                        <i class="bi bi-credit-card text-primary me-3" style="font-size: 24px;"></i>
+                                        <div>
+                                            <h6 class="mb-1">Оплата при получении</h6>
+                                            <p class="text-muted small mb-0">Наличными или картой</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="d-flex align-items-start mb-3">
+                                        <i class="bi bi-arrow-repeat text-primary me-3" style="font-size: 24px;"></i>
+                                        <div>
+                                            <h6 class="mb-1">Гарантия возврата</h6>
+                                            <p class="text-muted small mb-0">В течение 14 дней</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-white py-4 mt-5">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-6">
+                        <p class="mb-0">© 2025 Все права защищены | Каталог товаров</p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <a href="goods_v1.html" class="text-white text-decoration-none me-3">
+                            <i class="bi bi-arrow-clockwise me-1"></i>Старая версия
+                        </a>
+                        <a href="../index.html" class="text-white text-decoration-none">
+                            <i class="bi bi-house me-1"></i>На главную
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- НОВОЕ: JavaScript для интерактивности -->
+    <script>
+        // Обработка кнопки "Уведомить о поступлении"
+        document.querySelectorAll('.btn-outline-primary').forEach(button => {
+            if (button.textContent.includes('Уведомить')) {
+                button.addEventListener('click', function() {
+                    alert('Спасибо! Мы уведомим вас, когда товар появится в наличии.');
+                });
+            }
+        });
+
+        // Обработка добавления в корзину
+        document.querySelectorAll('.btn-primary').forEach(button => {
+            if (button.textContent.includes('Добавить в корзину')) {
+                button.addEventListener('click', function() {
+                    const card = this.closest('.card');
+                    const productName = card.querySelector('.card-title').textContent.trim();
+                    const priceElement = card.querySelector('.new-price');
+                    const price = priceElement ? priceElement.textContent : '';
+                    
+                    // Анимация кнопки
+                    this.innerHTML = '<i class="bi bi-check2 me-2"></i>Добавлено!';
+                    this.classList.remove('btn-primary');
+                    this.classList.add('btn-success');
+                    
+                    // Уведомление
+                    setTimeout(() => {
+                        alert(`Товар "${productName}" добавлен в корзину!\nЦена: ${price}`);
+                        
+                        // Возврат кнопки к исходному виду
+                        this.innerHTML = '<i class="bi bi-cart-plus me-2"></i>Добавить в корзину';
+                        this.classList.remove('btn-success');
+                        this.classList.add('btn-primary');
+                    }, 500);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+
